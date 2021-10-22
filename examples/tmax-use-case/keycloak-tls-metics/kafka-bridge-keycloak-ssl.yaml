@@ -1,0 +1,25 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaBridge
+metadata:
+  name: quickstart
+  namespace: kafka
+spec:
+  replicas: 1
+  bootstrapServers: bootstrap.172.22.6.13.nip.io:443  
+  http:
+    port: 8080
+  authentication:
+    type: oauth
+    tokenEndpointUri: https://hyperauth.172.22.6.13.nip.io/auth/realms/kafka-authz/protocol/openid-connect/token
+    clientId: team-a-client
+    clientSecret:
+      secretName: kafka-keycloak-client-secret
+      key: team-a-client-secret
+    tlsTrustedCertificates:
+    - secretName: hyperauth-https-secret-ingress 
+      certificate: tls.crt   
+  tls:
+    trustedCertificates:
+    - secretName: kafka-tls
+      certificate: tls.crt
+  enableMetrics: true

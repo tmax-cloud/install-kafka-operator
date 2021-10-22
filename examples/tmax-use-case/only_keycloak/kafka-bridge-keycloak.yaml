@@ -1,0 +1,18 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaBridge
+metadata:
+  name: quickstart
+  namespace: kafka
+spec:
+  replicas: 1
+  bootstrapServers: 172.22.6.18:9094
+  http:
+    port: 8080
+  authentication:
+    type: oauth
+    tokenEndpointUri: http://172.22.6.8:8080/auth/realms/kafka-authz/protocol/openid-connect/token
+    clientId: team-a-client
+    clientSecret:
+      secretName: kafka-keycloak-client-secret
+      key: team-a-client-secret
+      

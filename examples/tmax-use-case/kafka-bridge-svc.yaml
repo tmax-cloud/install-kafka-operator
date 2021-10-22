@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bridge-svc
+  namespace: kafka
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    strimzi.io/cluster: quickstart
+    strimzi.io/kind: KafkaBridge 
+  type: LoadBalancer
+
