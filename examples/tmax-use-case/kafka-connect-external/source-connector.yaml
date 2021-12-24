@@ -1,0 +1,33 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: kafka-connector-debezium
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: kafka-connect-cluster
+spec:
+  class: io.debezium.connector.mysql.MySqlConnector
+  tasksMax: 1
+  config:
+    database.hostname: 172.22.6.16
+    database.port: "3306"
+    database.user: "admin"
+    database.password: "admin"
+    database.server.id: "184055"
+    database.server.name: "tmax"
+    database.whitelist: "tmax"
+    database.history.kafka.bootstrap.servers: "bootstrap.172.22.6.13.nip.io:443"
+    database.history.kafka.topic: "schema-changes.tmax"
+    database.history.producer.security.protocol: "SSL"
+    database.history.producer.ssl.keystore.location: "/opt/kafka/connect-certs/kafka-connect-jks/keystore.jks"
+    database.history.producer.ssl.keystore.password: "tmax@23"
+    database.history.producer.ssl.truststore.location: "/opt/kafka/connect-certs/kafka-connect-jks/truststore.jks"
+    database.history.producer.ssl.truststore.password: "tmax@23"
+    database.history.producer.ssl.key.password: "tmax@23"
+    database.history.consumer.security.protocol: "SSL"
+    database.history.consumer.ssl.keystore.location: "/opt/kafka/connect-certs/kafka-connect-jks/keystore.jks"
+    database.history.consumer.ssl.keystore.password: "tmax@23"
+    database.history.consumer.ssl.truststore.location: "/opt/kafka/connect-certs/kafka-connect-jks/truststore.jks"
+    database.history.consumer.ssl.truststore.password: "tmax@23"
+    database.history.consumer.ssl.key.password: "tmax@23"
+    include.schema.changes: "true"   

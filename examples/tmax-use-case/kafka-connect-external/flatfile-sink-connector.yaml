@@ -1,0 +1,28 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: kafka-flatfile-sink-connector
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: kafka-connect-cluster
+spec:
+  class: org.apache.kafka.connect.file.FileStreamSinkConnector
+  tasksMax: 1
+  config:
+    file: "/tmp/sink_file.txt"
+    #    file: "/root/kafka/strimzi-operator/kafka-connect-external/sinkFile.txt"
+    topics: "mysqldb.inventory.orders"
+    database.history.kafka.bootstrap.servers: "bootstrap.172.22.6.13.nip.io:443"
+    database.history.kafka.topic: "schema-changes.inventory"
+    database.history.producer.security.protocol: "SSL"
+    database.history.producer.ssl.keystore.location: "/opt/kafka/connect-certs/kafka-connect-jks/keystore.jks"
+    database.history.producer.ssl.keystore.password: "tmax@23"
+    database.history.producer.ssl.truststore.location: "/opt/kafka/connect-certs/kafka-connect-jks/truststore.jks"
+    database.history.producer.ssl.truststore.password: "tmax@23"
+    database.history.producer.ssl.key.password: "tmax@23"
+    database.history.consumer.security.protocol: "SSL"
+    database.history.consumer.ssl.keystore.location: "/opt/kafka/connect-certs/kafka-connect-jks/keystore.jks"
+    database.history.consumer.ssl.keystore.password: "tmax@23"
+    database.history.consumer.ssl.truststore.location: "/opt/kafka/connect-certs/kafka-connect-jks/truststore.jks"
+    database.history.consumer.ssl.truststore.password: "tmax@23"
+    database.history.consumer.ssl.key.password: "tmax@23"

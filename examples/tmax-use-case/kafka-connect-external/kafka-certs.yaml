@@ -1,0 +1,35 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: kafka-broker-jks-certificate
+  namespace: kafka
+spec:
+  secretName: kafka-connect-jks
+  commonName: kafka
+  dnsNames:
+    - "*.172.22.6.13.nip.io"
+    - "*.nip.io"  
+    - kafka-kafka-bootstrap.hyperauth
+    - "*.kafka-kafka-brokers.hyperauth.svc"
+    - "*.hyperauth"
+    - tmax-cloud
+  isCA: false
+  keySize: 2048
+  duration: 8760h # 360d=1y
+  renewBefore: 720h # 30d
+  keyAlgorithm: rsa
+  keyEncoding: pkcs1
+  keystores:
+    jks:
+      create: true
+      passwordSecretRef: # Password used to encrypt the keystore
+        key: CERTS_PASSWORD
+        name: passwords
+  usages:
+    - digital signature
+    - key encipherment
+    - server auth
+  issuerRef:
+    name: tmaxcloud-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io    

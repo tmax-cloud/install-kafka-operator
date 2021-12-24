@@ -1,0 +1,115 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mariadb-pvc
+  namespace: mariadb
+spec:
+ # storageClassName: csi-cephfs-sc
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mariadb-secret
+  namespace: mariadb
+data:
+  MYSQL_USER: YWRtaW4=
+  MYSQL_PASSWORD: YWRtaW4=
+  MYSQL_DATABASE: a2Fma2E=
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb-service
+  namespace: mariadb
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mariadb
+  type: NodePort
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my.cnf
+  namespace: mariadb
+data:
+  master.cnf: |
+    # Apply this config only on the master.
+    [mysqld]  
+    # Disabling symbolic-links is recommended to prevent assorted security risks
+    symbolic-links = 0
+    # http://www.percona.com/blog/2008/05/31/dns-achilles-heel-mysql-installation/
+    skip_name_resolve
+    # http://www.chriscalender.com/ignoring-the-lostfound-directory-in-your-datadir/
+    ignore-db-dir=lost+found
+    # GlusterFS equivalent of 'lost+found'
+    ignore-db-dir=.trashcan
+
+    log_bin = /var/log/mysql/mysql-bin.log
+    expire_logs_days = 10
+    max_binlog_size = 100M
+    binlog_format = mixed
+    server-id = 1
+    sync_binlog=1
+    #default_authentication_plugin= mysql_native_password  # mysql 8만 해당 다른버전은 삭제할것
+    !includedir /etc/my.cnf.d
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+  namespace: mariadb
+spec:
+  selector:
+    matchLabels:
+      app: mariadb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - image: mariadb:10.7
+        name: mariadb
+        ports:
+        - containerPort: 3306 # Container 포트
+          name: mariadb
+        volumeMounts:
+        - name: mariadb-persistent-storage
+          mountPath: /var/lib/mysql/data
+        env:
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-secret
+              key: MYSQL_USER
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-secret
+              key: MYSQL_PASSWORD
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-secret
+              key: MYSQL_DATABASE
+      volumes:
+      - name: mariadb-persistent-storage
+        persistentVolumeClaim:
+          claimName: mariadb-pvc
+
+
+
