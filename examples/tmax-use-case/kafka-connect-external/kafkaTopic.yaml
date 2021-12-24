@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  labels:
+    strimzi.io/cluster: kafka
+  name: schema-changes.kafka
+  namespace: kafka
+spec:
+  partitions: 1
+  replicas: 1
+

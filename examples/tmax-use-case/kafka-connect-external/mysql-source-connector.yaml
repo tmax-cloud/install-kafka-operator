@@ -1,0 +1,39 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: kafka-source-connector-mysql
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: kafka-connect-cluster
+spec:
+  class: io.confluent.connect.jdbc.JdbcSourceConnector
+  tasksMax: 1
+  config:
+    connection.url: "jdbc:mysql://172.22.6.15:3306/tmax?enabledTLSProtocols=TLSv1.2"
+    connection.user: "admin"
+    connection.password: "admin"
+    topic.prefix: "jdbc-connector-"
+    poll.interval.ms: 5000
+    table.whitelist: "developer"
+    mode: "incrementing"
+    incrementing.column.name: "id"
+    topic.creation.default.replication.factor: 1
+    topic.creation.default.partitions: 1
+    #key.converter: "org.apache.kafka.connect.json.JsonConverter"
+    #key.converter.schemas.enable: "true"
+    #value.converter: "org.apache.kafka.connect.json.JsonConverter"
+    #value.converter.schemas.enable: "true"
+    database.history.kafka.bootstrap.servers: "bootstrap.172.22.6.13.nip.io:443"
+    #    database.history.kafka.topic: "schema-changes.inventory"
+    database.history.producer.security.protocol: "SSL"
+    database.history.producer.ssl.keystore.location: "/opt/kafka/connect-certs/kafka-connect-jks/keystore.jks"
+    database.history.producer.ssl.keystore.password: "tmax@23"
+    database.history.producer.ssl.truststore.location: "/opt/kafka/connect-certs/kafka-connect-jks/truststore.jks"
+    database.history.producer.ssl.truststore.password: "tmax@23"
+    database.history.producer.ssl.key.password: "tmax@23"
+    database.history.consumer.security.protocol: "SSL"
+    database.history.consumer.ssl.keystore.location: "/opt/kafka/connect-certs/kafka-connect-jks/keystore.jks"
+    database.history.consumer.ssl.keystore.password: "tmax@23"
+    database.history.consumer.ssl.truststore.location: "/opt/kafka/connect-certs/kafka-connect-jks/truststore.jks"
+    database.history.consumer.ssl.truststore.password: "tmax@23"
+    database.history.consumer.ssl.key.password: "tmax@23"
