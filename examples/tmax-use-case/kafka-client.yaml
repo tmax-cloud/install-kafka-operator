@@ -9,11 +9,11 @@ spec:
     image: quay.io/strimzi/kafka:0.25.0-kafka-2.8.0
     command: ["/bin/bash"]
     args: [ "-c", 'for((i=0;;i+=1)); do echo "Up time: \$i min" && sleep 60; done' ]
-    volumeMounts:
-    - name: truststore
-      mountPath: /opt/kafka/certificates
-      readOnly: true
-  volumes:
-  - name: truststore
-    secret:
-      secretName: client-kafka-jks-ingress
+    #volumeMounts:
+    #- name: truststore
+    #  mountPath: /opt/kafka/certificates
+    #  readOnly: true
+  #volumes:
+  #- name: truststore
+  #secret:
+  #  secretName: client-kafka-jks-ingress
