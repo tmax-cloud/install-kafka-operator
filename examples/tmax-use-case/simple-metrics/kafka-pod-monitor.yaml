@@ -39,6 +39,25 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
+  name: bridge-metrics
+  namespace: monitoring
+  labels:
+    app: strimzi
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      strimzi.io/kind: KafkaBridge
+  namespaceSelector:
+    matchNames:
+      - kafka
+  podMetricsEndpoints:
+  - path: /metrics
+    port: rest-api
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
   name: kafka-resources-metrics
   namespace: monitoring
   labels:
