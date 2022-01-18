@@ -1,0 +1,32 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnect
+metadata:
+  name: auto-connect
+  namespace: redis
+  annotations:
+  # use-connector-resources configures this KafkaConnect
+  # to use KafkaConnector resources to avoid
+  # needing to call the Connect REST API directly
+    strimzi.io/use-connector-resources: "true"
+spec:
+  build:
+    output:
+      type: docker
+      image: 192.168.9.12:5000/kafka-connect:latest
+    plugins:
+      - name: debezium-postgres-connector
+        artifacts:
+        - type: zip
+          url: https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.4.2.Final/debezium-connector-postgres-1.4.2.Final-plugin.zip
+      - name: redis-connector
+        artifacts:
+        - type: jar
+          url: https://github.com/jaredpetersen/kafka-connect-redis/releases/download/1.2.2/kafka-connect-redis-1.2.2.jar
+  bootstrapServers: simple-kafka-bootstrap:9092
+  replicas: 1
+  config:
+    config.storage.replication.factor: 1
+    offset.storage.replication.factor: 1
+    status.storage.replication.factor: 1
+    config.providers: file
+    config.providers.file.class: org.apache.kafka.common.config.provider.FileConfigProvider
