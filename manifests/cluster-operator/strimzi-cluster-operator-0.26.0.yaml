@@ -8826,8 +8826,8 @@ spec:
             - name: co-config-volume
               mountPath: /opt/strimzi/custom-config/
           env:
-            - name: STRIMZI_NAMESPACE
-              value: "*"
+            - name: STRIMZI_NAMESPACE # The only modified part
+              value: "*" # To watch all namespace, fix this to "*"
             - name: STRIMZI_FULL_RECONCILIATION_INTERVAL_MS
               value: '120000'
             - name: STRIMZI_OPERATION_TIMEOUT_MS
