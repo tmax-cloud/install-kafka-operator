@@ -9,13 +9,13 @@ spec:
   class: io.debezium.connector.mysql.MySqlConnector
   tasksMax: 1
   config:
-    database.hostname: 172.22.6.2
+    database.hostname: "mysql.kafka.svc.cluster.local"
     database.port: "3306"
-    database.user: "mysqluser"
-    database.password: "mysqlpw"
+    database.user: "root"
+    database.password: "mypassword"
     database.server.id: "184054"
     database.server.name: "dbserver1"
-    database.whitelist: "inventory"
+    database.whitelist: "mysql"
     database.history.kafka.bootstrap.servers: "my-cluster-kafka-bootstrap:9092"
     database.history.kafka.topic: "schema-changes.inventory"
     include.schema.changes: "true"   
