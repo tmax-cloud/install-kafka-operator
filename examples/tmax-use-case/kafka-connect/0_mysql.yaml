@@ -1,5 +1,6 @@
 # mysql 실행 후 접속하여 아래 명령어 실행
 # mysql> SET GLOBAL binlog_format = 'ROW';
+# mysql> SET GLOBAL server_id = 184054;
 
 apiVersion: apps/v1
 kind: Deployment
