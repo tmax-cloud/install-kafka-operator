@@ -5,8 +5,15 @@ metadata:
   namespace: kafka
 spec:
   kafka:
-    version: 2.8.0
+    version: 3.0.0
     replicas: 1
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1536Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
     listeners:
       - name: plain
         port: 9092
@@ -31,5 +38,19 @@ spec:
       size: 100Gi
       deleteClaim: false
   entityOperator:
-    topicOperator: {}
-    userOperator: {}
+    topicOperator:
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 1536Mi
+        requests:
+          cpu: 100m
+          memory: 100Mi
+    userOperator:
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 1536Mi
+        requests:
+          cpu: 100m
+          memory: 100Mi

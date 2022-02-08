@@ -17,5 +17,5 @@ spec:
     database.server.name: "dbserver1"
     database.whitelist: "mysql"
     database.history.kafka.bootstrap.servers: "my-cluster-kafka-bootstrap:9092"
-    database.history.kafka.topic: "schema-changes.inventory"
+    database.history.kafka.topic: "schema-changes.mysql"
     include.schema.changes: "true"   
