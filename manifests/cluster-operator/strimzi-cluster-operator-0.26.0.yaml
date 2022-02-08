@@ -8812,6 +8812,10 @@ spec:
         - name: co-config-volume
           configMap:
             name: strimzi-cluster-operator
+        - name: strimzi-cluster-operator-service-account-token
+          secret:
+            defaultMode: 420
+            secretName: strimzi-cluster-operator-service-account-token
       containers:
         - name: strimzi-cluster-operator
           image: 'quay.io/strimzi/operator:0.26.0'
@@ -8825,6 +8829,9 @@ spec:
               mountPath: /tmp
             - name: co-config-volume
               mountPath: /opt/strimzi/custom-config/
+            - name: strimzi-cluster-operator-service-account-token
+              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+              readOnly: true
           env:
             - name: STRIMZI_NAMESPACE # The only modified part
               value: "*" # To watch all namespace, fix this to "*"
@@ -11550,6 +11557,16 @@ metadata:
   labels:
     app: strimzi
   namespace: kafka
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: strimzi-cluster-operator-service-account-token
+  namespace: kafka
+  annotations:
+    kubernetes.io/service-account.name: strimzi-cluster-operator
+type: kubernetes.io/service-account-token
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
