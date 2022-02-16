@@ -13,8 +13,6 @@ spec:
       labels:
         name: kafka-bindable-operator
     spec:
-      imagePullSecrets:
-      - name: docker-hub-account
       containers:
       - args:
         - --secure-listen-address=0.0.0.0:8443
