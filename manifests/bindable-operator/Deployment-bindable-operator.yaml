@@ -31,7 +31,7 @@ spec:
         - --leader-elect
         command:
         - /manager
-        image: tmaxcloudck/kafka-bindable-operator:1.0.0
+        image: tmaxcloudck/kafka-bindable-operator:1.0.1
         livenessProbe:
           httpGet:
             path: /healthz
