@@ -37,20 +37,20 @@ spec:
       type: persistent-claim
       size: 100Gi
       deleteClaim: false
-  entityOperator:
-    topicOperator:
-      resources:
-        limits:
-          cpu: 1000m
-          memory: 1536Mi
-        requests:
-          cpu: 100m
-          memory: 100Mi
-    userOperator:
-      resources:
-        limits:
-          cpu: 1000m
-          memory: 1536Mi
-        requests:
-          cpu: 100m
-          memory: 100Mi
+  #entityOperator:
+  #  topicOperator:
+  #    resources:
+  #      limits:
+  #        cpu: 1000m
+  #        memory: 1536Mi
+  #      requests:
+  #        cpu: 100m
+  #        memory: 100Mi
+  #  userOperator:
+  #    resources:
+  #      limits:
+  #        cpu: 1000m
+  #        memory: 1536Mi
+  #      requests:
+  #        cpu: 100m
+  #        memory: 100Mi

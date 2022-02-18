@@ -9,7 +9,7 @@ metadata:
   # needing to call the Connect REST API directly
     strimzi.io/use-connector-resources: "true"
 spec:
-  image: 192.168.9.12:5000/connect-debezium:latest
+  image: 192.168.9.12:5000/kafka-connecct-dev-swlee:r0.0.1
   replicas: 1
   bootstrapServers: my-cluster-kafka-bootstrap:9092
   config:
@@ -18,6 +18,8 @@ spec:
     status.storage.replication.factor: 1
     config.providers: file
     config.providers.file.class: org.apache.kafka.common.config.provider.FileConfigProvider
+    key.converter: org.apache.kafka.connect.storage.StringConverter
+    value.converter: org.apache.kafka.connect.storage.StringConverter
   externalConfiguration:
     volumes:
       - name: connector-config
