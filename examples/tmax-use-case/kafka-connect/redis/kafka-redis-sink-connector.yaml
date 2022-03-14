@@ -1,0 +1,16 @@
+apiVersion: "kafka.strimzi.io/v1beta2"
+kind: "KafkaConnector"
+metadata:
+  name: "redis-connector"
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: my-connect-cluster3
+spec:
+  class: com.github.jcustenborder.kafka.connect.redis.RedisSinkConnector
+  tasksMax: 1
+  config:
+    redis.hosts: "redis-service.kafka.svc.cluster.local"
+    redis.client.mode: "Standalone"
+    redis.database: "1"
+    redis.password: "mypassword"
+    topics: "redis-test-6"

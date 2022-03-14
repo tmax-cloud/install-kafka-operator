@@ -1,0 +1,29 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnect
+metadata:
+  name: my-connect-cluster3
+  namespace: kafka
+  annotations:
+  # use-connector-resources configures this KafkaConnect
+  # to use KafkaConnector resources to avoid
+  # needing to call the Connect REST API directly
+    strimzi.io/use-connector-resources: "true"
+spec:
+  image: 192.168.9.12:5000/kafka-connecct-dev-swlee:m1.0.8
+  replicas: 1
+  bootstrapServers: my-cluster-kafka-bootstrap:9092
+  config:
+    config.storage.replication.factor: 1
+    offset.storage.replication.factor: 1
+    status.storage.replication.factor: 1
+    config.providers: file
+    config.providers.file.class: org.apache.kafka.common.config.provider.FileConfigProvider
+    key.converter: io.confluent.connect.avro.AvroConverter
+    key.converter.schema.registry.url: http://schema-registry.kafka.svc.cluster.local:8081 
+    value.converter: io.confluent.connect.avro.AvroConverter
+    value.converter.schema.registry.url: http://schema-registry.kafka.svc.cluster.local:8081
+  externalConfiguration:
+    volumes:
+      - name: connector-config
+        secret:
+          secretName: mysql-secret

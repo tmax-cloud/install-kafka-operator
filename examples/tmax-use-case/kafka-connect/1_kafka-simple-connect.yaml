@@ -6,7 +6,7 @@ metadata:
 spec:
   kafka:
     version: 3.0.0
-    replicas: 1
+    replicas: 3
     resources:
       limits:
         cpu: 1000m
@@ -32,25 +32,8 @@ spec:
         size: 100Gi
         deleteClaim: false
   zookeeper:
-    replicas: 1
+    replicas: 3
     storage:
       type: persistent-claim
       size: 100Gi
       deleteClaim: false
-  #entityOperator:
-  #  topicOperator:
-  #    resources:
-  #      limits:
-  #        cpu: 1000m
-  #        memory: 1536Mi
-  #      requests:
-  #        cpu: 100m
-  #        memory: 100Mi
-  #  userOperator:
-  #    resources:
-  #      limits:
-  #        cpu: 1000m
-  #        memory: 1536Mi
-  #      requests:
-  #        cpu: 100m
-  #        memory: 100Mi
