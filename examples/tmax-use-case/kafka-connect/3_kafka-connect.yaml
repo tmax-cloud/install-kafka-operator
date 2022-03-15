@@ -9,7 +9,7 @@ metadata:
   # needing to call the Connect REST API directly
     strimzi.io/use-connector-resources: "true"
 spec:
-  image: 192.168.9.12:5000/kafka-connecct-dev-swlee:m1.0.8
+  image: tmaxcloudck/kafka-connect:v1.0.0
   replicas: 1
   bootstrapServers: my-cluster-kafka-bootstrap:9092
   config:
