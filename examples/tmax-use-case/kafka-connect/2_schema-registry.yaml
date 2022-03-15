@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: my-cluster-schema-registry
-        image: docker.io/confluentinc/cp-schema-registry:7.0.1
+        image: confluentinc/cp-schema-registry:7.0.1
         ports:
         - containerPort: 8081
         env:

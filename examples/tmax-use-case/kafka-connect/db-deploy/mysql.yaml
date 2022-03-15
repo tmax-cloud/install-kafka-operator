@@ -19,7 +19,10 @@ spec:
         name: mysql
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: mypassword
+          valueFrom:
+            secretKeyRef:
+              name: mysql-credentials
+              key: mysql_password
         ports:
         - containerPort: 3306
           name: mysql
@@ -57,7 +60,7 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: my-sql-credentials
+  name: mysql-credentials
   namespace: kafka
 type: Opaque
 data:
