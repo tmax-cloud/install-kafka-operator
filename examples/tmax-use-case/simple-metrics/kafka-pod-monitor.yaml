@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: cluster-operator-metrics
-  namespace: monitoring
+  namespace: kafka
   labels:
     app: strimzi
     release: prometheus
@@ -21,7 +21,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: bridge-metrics
-  namespace: monitoring
+  namespace: kafka
   labels:
     app: strimzi
     release: prometheus
@@ -40,7 +40,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: kafka-resources-metrics
-  namespace: monitoring
+  namespace: kafka
   labels:
     app: strimzi
     release: prometheus
