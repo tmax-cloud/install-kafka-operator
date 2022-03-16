@@ -83,5 +83,5 @@ data:
     SET GLOBAL server_id = 184054;
     CREATE DATABASE test;
     use test;
-    CREATE TABLE example (name VARCHAR(32), number VARCHAR(32));
-    INSERT INTO example VALUES ('tmax', '123123');
+    CREATE TABLE example (id INT(16) NOT NULL, name VARCHAR(32));
+    INSERT INTO example VALUES (123, 'tmax');
