@@ -10,7 +10,7 @@ spec:
   tasksMax: 1
   config:
     topics: "example"
-    connection.url: "jdbc:postgresql://postgres-service.swlee.svc.cluster.local:5432/postgres"
+    connection.url: "jdbc:postgresql://postgres-service.kafka.svc.cluster.local:5432/postgres"
     connection.user: "postgres"
     connection.password: "tmax"
     auto.create: "true"
