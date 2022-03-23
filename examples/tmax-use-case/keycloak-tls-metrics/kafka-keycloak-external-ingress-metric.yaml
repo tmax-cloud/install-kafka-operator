@@ -85,9 +85,6 @@ spec:
         configMapKeyRef:
           name: kafka-metrics
           key: zookeeper-metrics-config.yml
-  entityOperator:
-    topicOperator: {}
-    userOperator: {}
   kafkaExporter:
     topicRegex: ".*"
     groupRegex: ".*" 

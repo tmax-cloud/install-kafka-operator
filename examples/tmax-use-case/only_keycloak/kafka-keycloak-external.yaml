@@ -45,6 +45,3 @@ spec:
     storage:
       type: persistent-claim
       size: 5Gi
-  entityOperator:
-    topicOperator: {}
-    userOperator: {}

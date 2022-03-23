@@ -2,7 +2,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: pod-affinity
-  namespace: swlee
+  namespace: kafka
 spec:
   kafka:
     version: 2.8.0
@@ -27,10 +27,10 @@ spec:
             requiredDuringSchedulingIgnoredDuringExecution:
               - labelSelector:
                   matchExpressions:
-                    - key: strimzi.io/name
+                    - key: strimzi.io/cluster
                       operator: In
                       values:
-                        - CLUSTER-NAME-kafka
+                        - pod-affinity
                 topologyKey: "kubernetes.io/hostname"
   zookeeper:
     replicas: 3
@@ -48,6 +48,3 @@ spec:
                       values:
                         - CLUSTER-NAME-zookeeper
                 topologyKey: "kubernetes.io/hostname"
-  entityOperator:
-    topicOperator: {}
-    userOperator: {}
