@@ -26,4 +26,11 @@ COPY ./streamthoughts-kafka-connect-file-pulse/ /opt/kafka/plugins/streamthought
 RUN mkdir -p /opt/kafka/plugins/jcustenborder-kafka-connect-json-schema
 COPY ./jcustenborder-kafka-connect-json-schema/ /opt/kafka/plugins/jcustenborder-kafka-connect-json-schema/
 
+RUN mkdir -p /opt/kafka/plugins/debezium-connector-mysql-1.8.1
+COPY ./debezium-connector-mysql-1.8.1/ /opt/kafka/plugins/debezium-connector-mysql-1.8.1/
+
+RUN mkdir -p /opt/kafka/plugins/debezium-connector-postgresql-1.8.1
+COPY ./debezium-connector-postgresql-1.8.1/ /opt/kafka/plugins/debezium-connector-postgresql-1.8.1/
+
+
 USER 1001
