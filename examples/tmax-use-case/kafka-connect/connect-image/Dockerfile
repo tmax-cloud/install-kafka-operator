@@ -1,5 +1,5 @@
 FROM confluentinc/cp-kafka-connect:5.5.0 as cp
-FROM strimzi/kafka:0.20.1-kafka-2.5.0
+FROM quay.io/strimzi/kafka:0.26.0-kafka-2.8.0
 USER root:root
 
 COPY --from=cp /usr/share/java/kafka-connect-storage-common /opt/kafka/plugins/kafka-connect-storage-common
