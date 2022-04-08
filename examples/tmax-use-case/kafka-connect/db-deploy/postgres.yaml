@@ -54,10 +54,18 @@ spec:
             - mountPath: /var/lib/postgresql/data
               name: data
               subPath: postgres
+            - mountPath: /docker-entrypoint-initdb.d
+              name: initdbsql
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: postgres-data
+      - name: initdbsql
+        configMap:
+          name: postgres-init-config
+          items:
+          - key: INIT_DB_SQL
+            path: init-db.sql
 ---
 
 kind: PersistentVolumeClaim
@@ -84,3 +92,13 @@ type: Opaque
 data:
   POSTGRES_PASSWORD: dG1heA==
 
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-config
+  namespace: kafka
+data:
+  INIT_DB_SQL: |-
+    CREATE TABLE sourcetest (id INT NOT NULL, name VARCHAR(32));
+    ALTER SYSTEM SET wal_level = logical;

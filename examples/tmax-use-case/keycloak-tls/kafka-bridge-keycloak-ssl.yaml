@@ -6,6 +6,16 @@ metadata:
 spec:
   replicas: 1
   bootstrapServers: bootstrap.172.22.6.13.nip.io:443  
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  jvmOptions:
+    "-Xmx": "1Gi"
+    "-Xms": "256m"
   http:
     port: 8080
   authentication:

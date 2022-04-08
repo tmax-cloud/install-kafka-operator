@@ -10,7 +10,7 @@ spec:
     resources:
       limits:
         cpu: 1000m
-        memory: 1536Mi
+        memory: 2Gi
       requests:
         cpu: 100m
         memory: 100Mi
@@ -19,6 +19,9 @@ spec:
         port: 9092
         type: internal
         tls: false
+    jvmOptions:
+      "-Xmx": "1500m"
+      "-Xms": "256m"
     config:
       offsets.topic.replication.factor: 1
       transaction.state.log.replication.factor: 1
@@ -33,6 +36,16 @@ spec:
         deleteClaim: false
   zookeeper:
     replicas: 3
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+    jvmOptions:
+      "-Xmx": "1500m"
+      "-Xms": "256m"
     storage:
       type: persistent-claim
       size: 100Gi

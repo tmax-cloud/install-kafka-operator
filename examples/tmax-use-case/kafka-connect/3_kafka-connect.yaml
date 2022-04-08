@@ -12,6 +12,16 @@ spec:
   image: tmaxcloudck/kafka-connect:v1.0.3
   replicas: 1
   bootstrapServers: my-cluster-kafka-bootstrap:9092
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  jvmOptions:
+    "-Xmx": "1500m"
+    "-Xms": "256m"
   config:
     config.storage.replication.factor: 1
     offset.storage.replication.factor: 1
