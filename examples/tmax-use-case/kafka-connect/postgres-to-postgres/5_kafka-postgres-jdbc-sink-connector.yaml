@@ -1,0 +1,26 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: postgres-connector1
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: my-connect-cluster3
+spec:
+  class: io.confluent.connect.jdbc.JdbcSinkConnector
+  tasksMax: 1
+  config:
+    topics: "postgres.public.sourcetest"
+    connection.url: "jdbc:postgresql://postgres-service-2.kafka.svc.cluster.local:5432/postgres"
+    connection.user: "postgres"
+    connection.password: "tmax"
+    auto.create: "true"
+    dialect.name: "PostgreSqlDatabaseDialect"
+    insert.mode: "upsert"
+    transforms: "unwrap"
+    transforms.unwrap.type: "io.debezium.transforms.ExtractNewRecordState"
+    pk.fields: "id"
+    pk.mode: "record_key"
+    delete.enabled: "true"
+    transforms.unwrap.drop.tombstones: "false"
+    transforms.unwrap.drop.deletes: "false"
+    auto.evolve: "true"
