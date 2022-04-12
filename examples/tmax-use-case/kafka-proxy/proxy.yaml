@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+   name: kafka-proxy
+   namespace: kafka
+spec:
+  selector:
+    matchLabels:
+      app: kafka-proxy
+  replicas: 3
+  serviceName: kafka-proxy
+  template:
+    metadata:
+      labels:
+        app: kafka-proxy
+    spec:
+      containers:
+        - name: kafka-proxy
+          image: grepplabs/kafka-proxy:latest
+          args:
+            - 'server'
+            - '--log-format=json'
+            - '--bootstrap-server-mapping=my-cluster-kafka-bootstrap:9092,0.0.0.0:32400'
+            - '--dynamic-advertised-listener=172.22.6.2'
+            - '--dynamic-sequential-min-port=32500'
+          ports:
+          - name: metrics
+            containerPort: 9080
+          - name: bootstrap
+            containerPort: 32400
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 9080
+            initialDelaySeconds: 5
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 9080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 2
+            failureThreshold: 5
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 1000m
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-proxy
+  namespace: kafka
+spec:
+  ports:
+  - port: 32400
+    targetPort: 32400
+    nodePort: 32400
+    name: bootstrap
+  - port: 32500
+    targetPort: 32500
+    nodePort: 32500
+    name: kafka-1
+  - port: 32501
+    targetPort: 32501
+    nodePort: 32501
+    name: kafka-2
+  - port: 32502
+    targetPort: 32502
+    nodePort: 32502
+    name: kafka-3
+  selector:
+    app: kafka-proxy
+  type: NodePort
