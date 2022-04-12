@@ -1,0 +1,25 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: postgres-debezium-source-connector
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: my-connect-cluster3
+spec:
+  class: io.debezium.connector.postgresql.PostgresConnector
+  tasksMax: 1
+  config:
+    database.hostname: "postgres-service.kafka.svc.cluster.local"
+    database.port: "5432"
+    database.user: "postgres"
+    database.password: "tmax"
+    database.server.name: "postgres"
+    database.dbname: "postgres"
+    table.include.list: "public.sourcetest"
+    database.history.kafka.bootstrap.servers: "my-cluster-kafka-bootstrap:9092"
+    database.history.kafka.topic: "schema-changes.postgres"
+    plugin.name: "pgoutput"
+    transforms: "route"
+    transforms.route.type: "org.apache.kafka.connect.transforms.RegexRouter"
+    transforms.route.regex: "([^.data]+)\\.([^.]+)\\.([^.]+)"
+    transforms.route.replacement: "$3"
