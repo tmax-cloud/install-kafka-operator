@@ -12,7 +12,7 @@ spec:
     topics: "postgres.public.sourcetest"
     connection.url: "jdbc:postgresql://postgres-service-2.kafka.svc.cluster.local:5432/postgres"
     connection.user: "postgres"
-    connection.password: "tmax"
+    connection.password: ${secrets:kafka/postgres-secret-2:POSTGRES_PASSWORD}
     auto.create: "true"
     dialect.name: "PostgreSqlDatabaseDialect"
     insert.mode: "upsert"
