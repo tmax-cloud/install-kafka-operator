@@ -12,7 +12,7 @@ spec:
     database.hostname: "postgres-service.kafka.svc.cluster.local"
     database.port: "5432"
     database.user: "postgres"
-    database.password: "tmax"
+    database.password: ${secrets:kafka/postgres-secret:POSTGRES_PASSWORD}
     database.server.name: "postgres"
     database.dbname: "postgres"
     table.include.list: "public.sourcetest"

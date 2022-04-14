@@ -12,5 +12,5 @@ spec:
     topics: "example"
     connection.url: "jdbc:postgresql://postgres-service.kafka.svc.cluster.local:5432/postgres"
     connection.user: "postgres"
-    connection.password: "tmax"
+    connection.password: ${secrets:kafka/postgres-secret:POSTGRES_PASSWORD}
     auto.create: "true"
