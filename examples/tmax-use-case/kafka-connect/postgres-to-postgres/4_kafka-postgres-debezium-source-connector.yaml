@@ -19,7 +19,3 @@ spec:
     database.history.kafka.bootstrap.servers: "my-cluster-kafka-bootstrap:9092"
     database.history.kafka.topic: "schema-changes.postgres"
     plugin.name: "pgoutput"
-    transforms: "route"
-    transforms.route.type: "org.apache.kafka.connect.transforms.RegexRouter"
-    transforms.route.regex: "([^.data]+)\\.([^.]+)\\.([^.]+)"
-    transforms.route.replacement: "$3"

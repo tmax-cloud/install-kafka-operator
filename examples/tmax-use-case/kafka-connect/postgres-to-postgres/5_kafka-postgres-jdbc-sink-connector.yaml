@@ -23,4 +23,5 @@ spec:
     delete.enabled: "true"
     transforms.unwrap.drop.tombstones: "false"
     transforms.unwrap.drop.deletes: "false"
+    transforms.unwrap.delete.handling.mode: "none"
     auto.evolve: "true"

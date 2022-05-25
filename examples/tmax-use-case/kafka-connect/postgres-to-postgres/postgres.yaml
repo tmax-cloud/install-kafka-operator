@@ -100,5 +100,6 @@ metadata:
   namespace: kafka
 data:
   INIT_DB_SQL: |-
-    CREATE TABLE sourcetest (id INT NOT NULL, name VARCHAR(32));
     ALTER SYSTEM SET wal_level = logical;
+    CREATE TABLE sourcetest (id INT PRIMARY KEY, name VARCHAR(32));
+    INSERT INTO sourcetest VALUES(11037, 'swlee');
