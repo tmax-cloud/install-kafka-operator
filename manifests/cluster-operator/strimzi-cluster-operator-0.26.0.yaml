@@ -11159,6 +11159,7 @@ spec:
                     - valueFrom
                   description: Metrics configuration.
               required:
+                - clusters
                 - connectCluster
               description: The specification of the Kafka MirrorMaker 2.0 cluster.
             status:
