@@ -1,3 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kafka
+
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -2134,6 +2140,7 @@ metadata:
   name: strimzi-cluster-operator-leader-election
   labels:
     app: strimzi
+  namespace: kafka
 subjects:
   - kind: ServiceAccount
     name: strimzi-cluster-operator
@@ -6863,6 +6870,7 @@ metadata:
   name: strimzi-cluster-operator
   labels:
     app: strimzi
+  namespace: kafka
 spec:
   replicas: 1
   selector:
@@ -6884,6 +6892,10 @@ spec:
         - name: co-config-volume
           configMap:
             name: strimzi-cluster-operator
+        - name: strimzi-cluster-operator-service-account-token
+          secret:
+            defaultMode: 420
+            secretName: strimzi-cluster-operator-service-account-token
       containers:
         - name: strimzi-cluster-operator
           image: quay.io/strimzi/operator:0.32.0
@@ -6897,6 +6909,9 @@ spec:
               mountPath: /tmp
             - name: co-config-volume
               mountPath: /opt/strimzi/custom-config/
+            - name: strimzi-cluster-operator-service-account-token
+              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+              readOnly: true
           env:
             - name: STRIMZI_NAMESPACE
               value: "*"
@@ -8003,6 +8018,7 @@ metadata:
   name: strimzi-cluster-operator
   labels:
     app: strimzi
+  namespace: kafka
 data:
   log4j2.properties: |
     name = COConfig
@@ -8082,6 +8098,7 @@ metadata:
   name: strimzi-cluster-operator-entity-operator-delegation
   labels:
     app: strimzi
+  namespace: kafka
 # The Entity Operator cluster role must be bound to the cluster operator service account so that it can delegate the cluster role to the Entity Operator.
 # This must be done to avoid escalating privileges which would be blocked by Kubernetes.
 subjects:
@@ -8116,6 +8133,17 @@ metadata:
   name: strimzi-cluster-operator
   labels:
     app: strimzi
+  namespace: kafka
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: strimzi-cluster-operator-service-account-token
+  namespace: kafka
+  annotations:
+    kubernetes.io/service-account.name: strimzi-cluster-operator
+type: kubernetes.io/service-account-token
 
 ---
 apiVersion: apiextensions.k8s.io/v1
